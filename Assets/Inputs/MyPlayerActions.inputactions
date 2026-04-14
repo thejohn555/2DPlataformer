@@ -1,15 +1,15 @@
 {
     "version": 1,
-    "name": "Player_1",
+    "name": "MyPlayerActions",
     "maps": [
         {
-            "name": "GamePlay",
-            "id": "4a1e28e6-5ab4-441b-8a8c-83ca0e029b93",
+            "name": "GamePlayActions",
+            "id": "b1034c72-076b-4258-8f33-8f1d509e4948",
             "actions": [
                 {
                     "name": "Move",
                     "type": "Value",
-                    "id": "16beb583-163a-4d8d-93c5-21397c77ca1a",
+                    "id": "36bbebb3-5a14-476b-99b4-1901f90e1cf6",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -18,7 +18,16 @@
                 {
                     "name": "Jump",
                     "type": "Button",
-                    "id": "9fe52104-da79-47e3-8d0e-e854e6fb91c7",
+                    "id": "1c7263dd-648b-46c4-b592-97ccb8b48fa0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Crouch",
+                    "type": "Button",
+                    "id": "68ce8eae-71dd-469b-a995-285bd2651d7c",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -28,7 +37,7 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "e6ad918d-f312-497a-8914-78acf427052a",
+                    "id": "4679b8e0-d206-4e5b-9578-6612f5fb8a32",
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
@@ -38,8 +47,19 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "",
+                    "id": "0e94ba38-2d65-4726-ae07-bd2a3adda765",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "1D Axis",
-                    "id": "fe31797f-0377-47c5-9dee-947488e59b18",
+                    "id": "cb128749-699e-43d0-89dd-31a7783ee1cc",
                     "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
@@ -50,7 +70,7 @@
                 },
                 {
                     "name": "Positive",
-                    "id": "ae9050db-9c1f-4f3f-afaa-22cfc2a27080",
+                    "id": "d7406aeb-63bb-4bf8-8869-1dfd35c76aab",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
@@ -61,7 +81,7 @@
                 },
                 {
                     "name": "Negative",
-                    "id": "ec952007-abab-47ac-a8cb-81fc6085ed5b",
+                    "id": "6e5f1a62-5a4a-4125-80d5-1e8b949a311c",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",

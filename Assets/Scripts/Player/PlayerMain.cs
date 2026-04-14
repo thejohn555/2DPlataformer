@@ -6,13 +6,13 @@ namespace Player
     {
         public Rigidbody2D Rb { get; protected set; }
 
-        [field: SerializeField] public Transform Feet { get; }
+        [field: SerializeField] public Transform Feet { get; private set; }
 
-
+        
         
         private void Awake()
         {
-            Rb = GetComponent<Rigidbody2D>();
+            Rb = GetComponentInChildren<Rigidbody2D>();
         }
     }
 }

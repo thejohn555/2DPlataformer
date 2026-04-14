@@ -1,4 +1,5 @@
 using System;
+using ScriptableObject;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -11,22 +12,38 @@ namespace Player
         [SerializeField] public float detectionGroundRadius;
         [SerializeField] private float jumpHeight;
         [SerializeField] private LayerMask whatIsGround;
+
+        [SerializeField] private InputReaderSO inputReader;
         
 
         private bool isGrounded;
         
-        private Vector3 verticalMovement;
+        private Vector2 verticalMovement;
+        
+        private Vector2 movementVector;
+        
 
         private void OnEnable()
         {
-            
+            inputReader.Initialize();
+            inputReader.OnJumpStart += Jump;
+            inputReader.OnMoveStart += UpdateMovement;
         }
 
         private void OnDisable()
         {
-            
+            inputReader.OnJumpStart -= Jump;
+            inputReader.OnMoveStart -= UpdateMovement;
         }
 
+        private void Update()
+        {
+            CheckGrounded();
+            ApplyGravity();
+            Move();
+            
+        }
+        
         private void CheckGrounded()
         {
             isGrounded = Physics.CheckSphere(playerMain.Feet.position,detectionGroundRadius,whatIsGround);
@@ -44,15 +61,20 @@ namespace Player
             }
         }
 
-        public void Jump()
+        private void Jump()
         {
             if (!isGrounded)return;
             verticalMovement.y = Mathf.Sqrt(-2 * gravityScale * jumpHeight);
         }
 
-        public void Move(float hInput)
+        private void UpdateMovement(float hInput)
         {
-            playerMain.Rb.AddForce(new Vector2(hInput,0)*moveForce, ForceMode2D.Force);
+            movementVector = new Vector2(hInput * moveForce, 0);
+        }
+
+        private void Move()
+        {
+            playerMain.Rb.AddForce(movementVector + verticalMovement, ForceMode2D.Force);
         }
     }
 }
