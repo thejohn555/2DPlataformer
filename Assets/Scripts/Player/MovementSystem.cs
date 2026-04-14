@@ -16,11 +16,11 @@ namespace Player
         [SerializeField] private InputReaderSO inputReader;
         
 
-        private bool isGrounded;
+        [SerializeField] private bool isGrounded;
         
-        private Vector2 verticalMovement;
+        [SerializeField] private Vector2 verticalMovement;
         
-        private Vector2 movementVector;
+        [SerializeField] private Vector2 movementVector;
         
 
         private void OnEnable()
@@ -46,7 +46,7 @@ namespace Player
         
         private void CheckGrounded()
         {
-            isGrounded = Physics.CheckSphere(playerMain.Feet.position,detectionGroundRadius,whatIsGround);
+            isGrounded = Physics2D.OverlapCircle(playerMain.Feet.position,detectionGroundRadius,whatIsGround);
         }
 
         private void ApplyGravity()
