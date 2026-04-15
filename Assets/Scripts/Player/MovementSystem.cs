@@ -13,7 +13,6 @@ namespace Player
         [SerializeField] private float jumpHeight;
         [SerializeField] private LayerMask whatIsGround;
 
-        [SerializeField] private InputReaderSO inputReader;
         
 
         [SerializeField] private bool isGrounded;
@@ -25,15 +24,15 @@ namespace Player
 
         private void OnEnable()
         {
-            inputReader.Initialize();
-            inputReader.OnJumpStart += Jump;
-            inputReader.OnMoveStart += UpdateMovement;
+            playerMain.InputReader.Initialize();
+            playerMain.InputReader.OnJumpStart += Jump;
+            playerMain.InputReader.OnMoveStart += UpdateMovement;
         }
 
         private void OnDisable()
         {
-            inputReader.OnJumpStart -= Jump;
-            inputReader.OnMoveStart -= UpdateMovement;
+            playerMain.InputReader.OnJumpStart -= Jump;
+            playerMain.InputReader.OnMoveStart -= UpdateMovement;
         }
 
         private void Update()
@@ -70,6 +69,19 @@ namespace Player
         private void UpdateMovement(float hInput)
         {
             movementVector = new Vector2(hInput * moveForce, 0);
+            Rotate(hInput);
+        }
+
+        private void Rotate(float hInput)
+        {
+            if (hInput < 0)
+            {
+                transform.eulerAngles = Vector3.zero;
+            }
+            else if (hInput > 0 && transform.eulerAngles.z == 0) 
+            {
+                transform.eulerAngles = new Vector3(0, 180, 0);
+            }
         }
 
         private void Move()

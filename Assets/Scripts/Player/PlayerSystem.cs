@@ -6,7 +6,7 @@ public class PlayerSystem : MonoBehaviour
 {
     protected PlayerMain playerMain;
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         playerMain = transform.root.GetComponent<PlayerMain>();
     }

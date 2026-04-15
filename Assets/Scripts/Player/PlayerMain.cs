@@ -1,3 +1,4 @@
+using ScriptableObject;
 using UnityEngine;
 
 namespace Player
@@ -5,6 +6,9 @@ namespace Player
     public class PlayerMain : MonoBehaviour
     {
         public Rigidbody2D Rb { get; private set; }
+
+
+        [field: SerializeField] public InputReaderSO InputReader { get; private set; }
 
         [field: SerializeField] public Transform Feet { get; private set; }
 
