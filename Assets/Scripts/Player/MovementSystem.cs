@@ -86,6 +86,8 @@ namespace Player
 
         private void Move()
         {
+            //1. al dar espacio -- quito gravedad -- al terminar los 2 seg. vuelves a acti
+            playerMain.Rb.linearVelocity =  Vector3.up * 2;
             playerMain.Rb.AddForce(movementVector + verticalMovement, ForceMode2D.Force);
         }
     }
