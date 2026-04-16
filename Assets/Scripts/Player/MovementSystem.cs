@@ -35,7 +35,7 @@ namespace Player
             playerMain.InputReader.OnMoveStart -= UpdateMovement;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             CheckGrounded();
             ApplyGravity();
@@ -63,7 +63,7 @@ namespace Player
         private void Jump()
         {
             if (!isGrounded)return;
-            verticalMovement.y = Mathf.Sqrt(-2 * gravityScale * jumpHeight);
+            verticalMovement.y = jumpHeight;
         }
 
         private void UpdateMovement(float hInput)
@@ -86,9 +86,10 @@ namespace Player
 
         private void Move()
         {
-            //1. al dar espacio -- quito gravedad -- al terminar los 2 seg. vuelves a acti
-            playerMain.Rb.linearVelocity =  Vector3.up * 2;
-            playerMain.Rb.AddForce(movementVector + verticalMovement, ForceMode2D.Force);
+            // //1. al dar espacio -- quito gravedad -- al terminar los 2 seg. vuelves a acti
+            // playerMain.Rb.linearVelocity =  Vector3.up * 2;
+            playerMain.Rb.AddForce(movementVector, ForceMode2D.Force);
+            playerMain.Rb.AddForce(verticalMovement, ForceMode2D.Impulse);
         }
     }
 }

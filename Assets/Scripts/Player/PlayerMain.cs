@@ -5,7 +5,10 @@ namespace Player
 {
     public class PlayerMain : MonoBehaviour
     {
+        [field: SerializeField] public float InteractionRadius { get; private set; }
+        [field: SerializeField] public Transform InteractionPoint { get; private set; }
         public Rigidbody2D Rb { get; private set; }
+        public Animator Anim { get; private set; }
 
 
         [field: SerializeField] public InputReaderSO InputReader { get; private set; }
@@ -23,6 +26,8 @@ namespace Player
         private void Awake()
         {
             Rb = GetComponentInChildren<Rigidbody2D>();
+            Anim = GetComponentInChildren<Animator>();
+            
         }
     }
 }

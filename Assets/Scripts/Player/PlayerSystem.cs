@@ -1,13 +1,14 @@
-using System;
-using Player;
 using UnityEngine;
 
-public class PlayerSystem : MonoBehaviour
+namespace Player
 {
-    protected PlayerMain playerMain;
-
-    protected virtual void Awake()
+    public class PlayerSystem : MonoBehaviour
     {
-        playerMain = transform.root.GetComponent<PlayerMain>();
+        protected PlayerMain playerMain;
+
+        protected virtual void Awake()
+        {
+            playerMain = transform.root.GetComponent<PlayerMain>();
+        }
     }
 }

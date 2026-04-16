@@ -16,3 +16,4 @@ MonoBehaviour:
   left: j
   right: l
   crouch: k
+  atack: p

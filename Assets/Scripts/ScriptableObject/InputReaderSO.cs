@@ -10,6 +10,7 @@ namespace ScriptableObject
     {
 
         public event Action OnJumpStart;
+        public event Action OnAtackStart;
         public event Action<float> OnMoveStart;
         public event Action OnCrouchStart,OnCrouchEnd;
 
@@ -17,6 +18,7 @@ namespace ScriptableObject
         [SerializeField] private string left;
         [SerializeField] private string right;
         [SerializeField] private string crouch;
+        [SerializeField] private string atack;
         
         private MyPlayerActions playerActions;
         private void OnEnable()
@@ -35,6 +37,7 @@ namespace ScriptableObject
         {
             playerActions.GamePlayActions.Jump.ApplyBindingOverride(0,$"<Keyboard>/{jump}");
             playerActions.GamePlayActions.Crouch.ApplyBindingOverride(0,$"<Keyboard>/{crouch}");
+            playerActions.GamePlayActions.Atack.ApplyBindingOverride(0,$"<Keyboard>/{atack}");
             playerActions.GamePlayActions.Move.ApplyBindingOverride(1,$"<Keyboard>/{right}");
             playerActions.GamePlayActions.Move.ApplyBindingOverride(2,$"<Keyboard>/{left}");
         }
@@ -48,7 +51,6 @@ namespace ScriptableObject
         {
             if (context.started)
             {
-                Debug.Log($"Jumping {context.ReadValue<float>()}");
                 OnJumpStart?.Invoke();
             }
         }
@@ -62,6 +64,14 @@ namespace ScriptableObject
             else if(context.canceled)
             {
                 OnCrouchEnd?.Invoke();
+            }
+        }
+
+        public void OnAtack(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                OnAtackStart?.Invoke();
             }
         }
     }

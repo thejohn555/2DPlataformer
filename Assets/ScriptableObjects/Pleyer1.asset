@@ -16,3 +16,4 @@ MonoBehaviour:
   left: a
   right: d
   crouch: s
+  atack: f
