@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using BaseCharacters;
 using Managers;
@@ -7,10 +8,11 @@ namespace Player
 {
     public class PlayerHealth : CharacterHealth
     {
-        protected PlayerMain playerMain;
+        private PlayerMain playerMain;
         private bool isCrounching;
         private float hpHeal = 1f;
         private float timeWaitHeal=2f;
+        private Coroutine healRoutine;
 
         protected override void Awake()
         {
@@ -18,7 +20,40 @@ namespace Player
             playerMain = transform.root.GetComponent<PlayerMain>();
         }
 
-        public void Heal(float health)
+        protected void OnEnable()
+        {
+            playerMain.InputReader.OnCrouchStart += CrouchStart;
+            playerMain.InputReader.OnCrouchEnd += CrouchEnd;
+        }
+
+        protected void OnDisable()
+        {
+            playerMain.InputReader.OnCrouchStart -= CrouchStart;
+            playerMain.InputReader.OnCrouchEnd -= CrouchEnd;
+        }
+
+        private void CrouchStart()
+        {
+            if(!playerMain.CanCrouch)return;
+            isCrounching = true;
+            playerMain.CanAttack = false;
+            playerMain.CanMove = false;
+            playerMain.CanJump = false;
+            healRoutine = StartCoroutine(HealRoutine());
+            
+        }
+
+        private void CrouchEnd()
+        {
+            isCrounching = false;
+            StopCoroutine(healRoutine);
+            playerMain.CanAttack = true;
+            playerMain.CanMove = true;
+            playerMain.CanJump = true;
+        }
+
+
+        private void Heal(float health)
         {
             Damageable(-health);
         }
@@ -29,7 +64,7 @@ namespace Player
             EventManager.Instance.PlayerDamage(Health/MaxHealth,playerMain.PlayerID );
         }
 
-        public IEnumerator HealRoutine()
+        private IEnumerator HealRoutine()
         {
             while (isCrounching)
             {

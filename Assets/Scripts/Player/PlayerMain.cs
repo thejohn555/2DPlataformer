@@ -10,6 +10,10 @@ namespace Player
         public Rigidbody2D Rb { get; private set; }
         public Animator Anim { get; private set; }
 
+        public bool CanJump { get; set; } = true;
+        public bool CanMove { get; set; } = true;
+        public bool CanAttack { get; set; } = true;
+        public bool CanCrouch { get; set; } = true;
 
         [field: SerializeField] public InputReaderSO InputReader { get; private set; }
 

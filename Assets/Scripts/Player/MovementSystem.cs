@@ -62,12 +62,14 @@ namespace Player
 
         private void Jump()
         {
+            if (!playerMain.CanJump) return;
             if (!isGrounded)return;
             verticalMovement.y = jumpHeight;
         }
 
         private void UpdateMovement(float hInput)
         {
+            if (!playerMain.CanMove) return;
             movementVector = new Vector2(hInput * moveForce, 0);
             Rotate(hInput);
         }

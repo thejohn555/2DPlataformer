@@ -5,7 +5,7 @@ namespace BaseCharacters
 {
     public class CharacterHealth : MonoBehaviour,IDamageable
     {
-        protected float Health { get; private set; }
+        [field: SerializeField]protected float Health { get; private set; }
         [field: SerializeField]protected float MaxHealth { get; private set; }
 
         protected virtual void Awake()
@@ -16,7 +16,6 @@ namespace BaseCharacters
         public virtual void Damageable(float damage)
         {
             Health -= damage;
-            
             CheckHealth();
         }
 
@@ -25,6 +24,10 @@ namespace BaseCharacters
             if (Health <= 0)
             {
                 Destroy(gameObject);
+            }
+            else if (Health > MaxHealth)
+            {
+                Health = MaxHealth;
             }
         }
     }

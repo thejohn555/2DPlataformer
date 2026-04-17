@@ -23,6 +23,7 @@ namespace Player
 
         private void Atack()
         {
+            if (!playerMain.CanAttack) return;
             if(atacking)return;
             StartCoroutine(AtackRoutine());
         }
