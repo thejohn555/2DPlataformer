@@ -1,3 +1,4 @@
+using System.Collections;
 using Interfaces;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ namespace BaseCharacters
             CheckHealth();
         }
 
-        private void CheckHealth()
+        protected virtual void CheckHealth()
         {
             if (Health <= 0)
             {

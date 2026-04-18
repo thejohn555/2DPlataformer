@@ -1,4 +1,5 @@
 using System;
+using Managers;
 using ScriptableObject;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -24,15 +25,35 @@ namespace Player
 
         private void OnEnable()
         {
-            playerMain.InputReader.Initialize();
-            playerMain.InputReader.OnJumpStart += Jump;
-            playerMain.InputReader.OnMoveStart += UpdateMovement;
+            Main.InputReader.Initialize();
+            Main.InputReader.OnJumpStart += Jump;
+            Main.InputReader.OnMoveStart += UpdateMovement;
+            EventManager.Instance.OnPlayerDeath += StopInputs;
+            EventManager.Instance.OnPlayerWin += StopInputs;
+            EventManager.Instance.OnlevelStart += StartInputs;
         }
-
         private void OnDisable()
         {
-            playerMain.InputReader.OnJumpStart -= Jump;
-            playerMain.InputReader.OnMoveStart -= UpdateMovement;
+            Main.InputReader.OnJumpStart -= Jump;
+            Main.InputReader.OnMoveStart -= UpdateMovement;
+            EventManager.Instance.OnPlayerDeath -= StopInputs;
+            EventManager.Instance.OnPlayerWin -= StopInputs;
+            EventManager.Instance.OnlevelStart -= StartInputs;
+        }
+
+        private void Start()
+        {
+            EventManager.Instance.StartLevel();
+        }
+        private void StopInputs()
+        {
+            Main.InputReader.PlayerActions.GamePlayActions.Disable();
+        }
+
+
+        private void StartInputs()
+        {
+            Main.InputReader.PlayerActions.GamePlayActions.Enable();
         }
 
         private void FixedUpdate()
@@ -45,7 +66,7 @@ namespace Player
         
         private void CheckGrounded()
         {
-            isGrounded = Physics2D.OverlapCircle(playerMain.Feet.position,detectionGroundRadius,whatIsGround);
+            isGrounded = Physics2D.OverlapCircle(Main.Feet.position,detectionGroundRadius,whatIsGround);
         }
 
         private void ApplyGravity()
@@ -57,19 +78,24 @@ namespace Player
             else
             {
                 verticalMovement.y += gravityScale * Time.deltaTime;
+                if (verticalMovement.y < -10f)
+                {
+                    verticalMovement.y = -10f;
+                }
             }
         }
 
         private void Jump()
         {
-            if (!playerMain.CanJump) return;
+            if (!Main.CanJump) return;
             if (!isGrounded)return;
             verticalMovement.y = jumpHeight;
+            AudioManager.Instance.PlaySound(3);
         }
 
         private void UpdateMovement(float hInput)
         {
-            if (!playerMain.CanMove) return;
+            if (!Main.CanMove) return;
             movementVector = new Vector2(hInput * moveForce, 0);
             Rotate(hInput);
         }
@@ -90,8 +116,8 @@ namespace Player
         {
             // //1. al dar espacio -- quito gravedad -- al terminar los 2 seg. vuelves a acti
             // playerMain.Rb.linearVelocity =  Vector3.up * 2;
-            playerMain.Rb.AddForce(movementVector, ForceMode2D.Force);
-            playerMain.Rb.AddForce(verticalMovement, ForceMode2D.Impulse);
+            Main.Rb.AddForce(movementVector, ForceMode2D.Force);
+            Main.Rb.AddForce(verticalMovement, ForceMode2D.Impulse);
         }
     }
 }

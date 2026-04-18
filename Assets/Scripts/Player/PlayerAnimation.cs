@@ -11,53 +11,63 @@ namespace Player
         private static readonly int Crouching = Animator.StringToHash("Crouching");
 
 
+        private bool attacking;
+        
         private void OnEnable()
         {
-            playerMain.InputReader.OnMoveStart += UpdateMovement;
-            playerMain.InputReader.OnJumpStart += UpdateJump;
-            playerMain.InputReader.OnAtackStart += UpdateAttack;
-            playerMain.InputReader.OnCrouchStart += StartCrouching;
-            playerMain.InputReader.OnCrouchEnd += EndCrouching;
+            Main.InputReader.OnMoveStart += UpdateMovement;
+            Main.InputReader.OnJumpStart += UpdateJump;
+            Main.InputReader.OnAtackStart += UpdateAttack;
+            Main.InputReader.OnCrouchStart += StartCrouching;
+            Main.InputReader.OnCrouchEnd += EndCrouching;
             
         }
         private void OnDisable()
         {
-            playerMain.InputReader.OnMoveStart -= UpdateMovement;
-            playerMain.InputReader.OnJumpStart -= UpdateJump;
-            playerMain.InputReader.OnAtackStart -= UpdateAttack;
-            playerMain.InputReader.OnCrouchStart -= StartCrouching;
-            playerMain.InputReader.OnCrouchEnd -= EndCrouching;
+            Main.InputReader.OnMoveStart -= UpdateMovement;
+            Main.InputReader.OnJumpStart -= UpdateJump;
+            Main.InputReader.OnAtackStart -= UpdateAttack;
+            Main.InputReader.OnCrouchStart -= StartCrouching;
+            Main.InputReader.OnCrouchEnd -= EndCrouching;
         }
 
         private void UpdateAttack()
         {
-            if (!playerMain.CanAttack) return;
-            playerMain.Anim.SetTrigger(Attack);
+            if (!Main.CanAttack) return;
+            if (attacking) return;
+            StartCoroutine(AttackEnumerator());
         }
 
+        private IEnumerator AttackEnumerator()
+        {
+            attacking = true;
+            Main.Anim.SetTrigger(Attack);
+            yield return new WaitForSeconds(1);
+            attacking = false;
+        }
         private void UpdateJump()
         {
-            if (!playerMain.CanJump) return;
+            if (!Main.CanJump) return;
             
-            playerMain.Anim.SetTrigger(Air);
+            Main.Anim.SetTrigger(Air);
         }
 
         private void StartCrouching()
         {
-            if (!playerMain.CanCrouch) return;
-            playerMain.Anim.SetBool(Crouching, true);
+            if (!Main.CanCrouch) return;
+            Main.Anim.SetBool(Crouching, true);
         }
 
         private void EndCrouching()
         {
-            if (!playerMain.CanCrouch) return;
-            playerMain.Anim.SetBool(Crouching, false);
+            if (!Main.CanCrouch) return;
+            Main.Anim.SetBool(Crouching, false);
         }
 
         private void UpdateMovement(float speed)
         {
-            if (!playerMain.CanMove) return;
-            playerMain.Anim.SetFloat(Speed, speed);
+            if (!Main.CanMove) return;
+            Main.Anim.SetFloat(Speed, speed);
         }
     }
 }

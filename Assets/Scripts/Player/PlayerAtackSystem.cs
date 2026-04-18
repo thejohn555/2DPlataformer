@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Interfaces;
+using Managers;
 using UnityEngine;
 
 namespace Player
@@ -13,18 +14,19 @@ namespace Player
 
         private void OnEnable()
         {
-            playerMain.InputReader.OnAtackStart += Atack;
+            Main.InputReader.OnAtackStart += Atack;
         }
 
         private void OnDisable()
         {
-            playerMain.InputReader.OnAtackStart -= Atack;
+            Main.InputReader.OnAtackStart -= Atack;
         }
 
         private void Atack()
         {
-            if (!playerMain.CanAttack) return;
+            if (!Main.CanAttack) return;
             if(atacking)return;
+            AudioManager.Instance.PlaySound(2);
             StartCoroutine(AtackRoutine());
         }
 
@@ -32,10 +34,10 @@ namespace Player
         {
             atacking = true;
             
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.2f);
 
-            Collider2D result = Physics2D.OverlapCircle(playerMain.InteractionPoint.position,
-                playerMain.InteractionRadius, attackingLayer);
+            Collider2D result = Physics2D.OverlapCircle(Main.InteractionPoint.position,
+                Main.InteractionRadius, attackingLayer);
             
             if (result!=null)
             {
@@ -44,6 +46,7 @@ namespace Player
                     damageable.Damageable(damage);
                 }
             }
+            yield return new WaitForSeconds(0.8f);
             atacking = false;
         }
         

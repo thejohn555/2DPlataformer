@@ -9,15 +9,21 @@ namespace Managers
     {
         [SerializeField] public Image healthBarPlayer1;
         [SerializeField] public Image healthBarPlayer2;
+        [SerializeField] public GameObject winPanel;
+        [SerializeField] public GameObject lossPanel;
 
         private void OnEnable()
         {
             EventManager.Instance.OnHealthChanged += UpdateHealth;
+            EventManager.Instance.OnPlayerWin += WinScreen;
+            EventManager.Instance.OnPlayerDeath += LoseScreen;
         }
 
         private void OnDisable()
         {
             EventManager.Instance.OnHealthChanged -= UpdateHealth;
+            EventManager.Instance.OnPlayerWin -= WinScreen;
+            EventManager.Instance.OnPlayerDeath -= LoseScreen;
         }
 
         private void UpdateHealth(float healthAmount,PlayerMain.IDPlayer player)
@@ -31,6 +37,18 @@ namespace Managers
                     healthBarPlayer2.fillAmount = healthAmount;
                     break;
             }
+        }
+
+        private void WinScreen()
+        {
+            winPanel.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+        }
+
+        private void LoseScreen()
+        {
+            lossPanel.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using Managers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -19,27 +20,28 @@ namespace ScriptableObject
         [SerializeField] private string right;
         [SerializeField] private string crouch;
         [SerializeField] private string atack;
-        
-        private MyPlayerActions playerActions;
+
+        public MyPlayerActions PlayerActions { get; private set; }
+
         private void OnEnable()
         {
-            playerActions = new MyPlayerActions();
-            playerActions.GamePlayActions.Enable();
-            playerActions.GamePlayActions.AddCallbacks(this);
+            PlayerActions = new MyPlayerActions();
+            PlayerActions.GamePlayActions.Enable();
+            PlayerActions.GamePlayActions.AddCallbacks(this);
             
         }
 
         private void OnDisable()
         {
-            playerActions.GamePlayActions.Disable();
+            PlayerActions.GamePlayActions.Disable();
         }
         public void Initialize()
         {
-            playerActions.GamePlayActions.Jump.ApplyBindingOverride(0,$"<Keyboard>/{jump}");
-            playerActions.GamePlayActions.Crouch.ApplyBindingOverride(0,$"<Keyboard>/{crouch}");
-            playerActions.GamePlayActions.Atack.ApplyBindingOverride(0,$"<Keyboard>/{atack}");
-            playerActions.GamePlayActions.Move.ApplyBindingOverride(1,$"<Keyboard>/{right}");
-            playerActions.GamePlayActions.Move.ApplyBindingOverride(2,$"<Keyboard>/{left}");
+            PlayerActions.GamePlayActions.Jump.ApplyBindingOverride(0,$"<Keyboard>/{jump}");
+            PlayerActions.GamePlayActions.Crouch.ApplyBindingOverride(0,$"<Keyboard>/{crouch}");
+            PlayerActions.GamePlayActions.Atack.ApplyBindingOverride(0,$"<Keyboard>/{atack}");
+            PlayerActions.GamePlayActions.Move.ApplyBindingOverride(1,$"<Keyboard>/{right}");
+            PlayerActions.GamePlayActions.Move.ApplyBindingOverride(2,$"<Keyboard>/{left}");
         }
         
         public void OnMove(InputAction.CallbackContext context)

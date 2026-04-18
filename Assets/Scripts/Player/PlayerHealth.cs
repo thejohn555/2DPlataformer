@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using BaseCharacters;
 using Managers;
+using UnityEditor.Toolbars;
 using UnityEngine;
 
 namespace Player
@@ -62,6 +63,17 @@ namespace Player
         {
             base.Damageable(damage);
             EventManager.Instance.PlayerDamage(Health/MaxHealth,playerMain.PlayerID );
+        }
+
+        protected override void CheckHealth()
+        {
+            if (Health <= 0)
+            {
+                EventManager.Instance.PlayerDead();
+                AudioManager.Instance.PlaySound(1);
+                Destroy(gameObject);
+            }
+            base.CheckHealth();
         }
 
         private IEnumerator HealRoutine()

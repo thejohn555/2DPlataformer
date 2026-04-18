@@ -31,7 +31,7 @@ namespace Player
         {
             Rb = GetComponentInChildren<Rigidbody2D>();
             Anim = GetComponentInChildren<Animator>();
-            
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 }

@@ -4,11 +4,11 @@ namespace Player
 {
     public class PlayerSystem : MonoBehaviour
     {
-        protected PlayerMain playerMain;
+        protected PlayerMain Main { get; set; }
 
         protected virtual void Awake()
         {
-            playerMain = transform.root.GetComponent<PlayerMain>();
+            Main = transform.root.GetComponent<PlayerMain>();
         }
     }
 }

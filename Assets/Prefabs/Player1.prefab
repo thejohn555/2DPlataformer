@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 4920428916725600676}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.824, y: 0.119, z: 0}
+  m_LocalPosition: {x: -0.904, y: 0.119, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -696,11 +696,12 @@ GameObject:
   - component: {fileID: 1686824984375229564}
   - component: {fileID: 1281597140416695430}
   - component: {fileID: 8666111067154800678}
+  - component: {fileID: 87890702330830860}
   - component: {fileID: 5022726511600853738}
   - component: {fileID: 5641597399661995470}
   m_Layer: 6
   m_Name: Player1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -734,7 +735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0e85ecf38a67945a4990f58811c45e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerMain
-  <InteractionRadius>k__BackingField: 0.5
+  <InteractionRadius>k__BackingField: 0.4
   <InteractionPoint>k__BackingField: {fileID: 7689759370366685649}
   <InputReader>k__BackingField: {fileID: 11400000, guid: 6a908e038c37aa64d89dfa6753200a6a, type: 2}
   <Feet>k__BackingField: {fileID: 6145883878635008940}
@@ -753,7 +754,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerAtackSystem
   attackingLayer:
     serializedVersion: 2
-    m_Bits: 183
+    m_Bits: 191
   damage: 2
 --- !u!114 &1281597140416695430
 MonoBehaviour:
@@ -767,6 +768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 375f441a7de00e34886a24cd69544f07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerHealth
+  <Health>k__BackingField: 0
   <MaxHealth>k__BackingField: 10
 --- !u!114 &8666111067154800678
 MonoBehaviour:
@@ -790,6 +792,18 @@ MonoBehaviour:
   isGrounded: 0
   verticalMovement: {x: 0, y: 0}
   movementVector: {x: 0, y: 0}
+--- !u!114 &87890702330830860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5796900050852583749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c625837c8626fd74a81aa5af4a86762d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerSpawnSystem
 --- !u!70 &5022726511600853738
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
